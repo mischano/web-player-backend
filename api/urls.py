@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import get_data
+from .views import search_audio_url
 
 urlpatterns = [
-    path('data/', get_data, name='get_data'),
+    path('search-audio-url/', search_audio_url, name='search_audio_url'),
 ]
