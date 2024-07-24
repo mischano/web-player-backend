@@ -1,6 +1,6 @@
 import yt_dlp
 
-def search_and_extract_audio_url(query):
+def extract_audio_data(query):
     ydl_opts = {
         'format': 'bestaudio/best',
         'quiet': True,
@@ -23,12 +23,16 @@ def search_and_extract_audio_url(query):
             video_info = search_result['entries'][0]
             video_url = video_info.get('url')
             if video_url:
-                # Get audio URL from the found video
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl_audio:
                     audio_info = ydl_audio.extract_info(video_url, download=False)
                     if 'url' in audio_info:
-                        return audio_info['url']
-                    
-    return None
+                        return extract_info(audio_info)
+
+def extract_info(audio_data):
+    audio_info = {}
+    keys_to_extract = ['url', 'title', 'duration', 'channel', 'uploader', 'description', 'view_count']
+    for key in keys_to_extract:
+        audio_info[key] = audio_data.get(key, None)
+    return audio_info
 
         
