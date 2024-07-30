@@ -29,7 +29,7 @@ def extract_audio_data(query):
                         return extract_info(audio_info)
 
 def extract_info(audio_data):
-    audio_info = {}
+    audio_info = {'error': False}
     keys_to_extract = ['url', 'title', 'duration', 'channel', 'uploader', 'description', 'view_count']
     for key in keys_to_extract:
         audio_info[key] = audio_data.get(key, None)

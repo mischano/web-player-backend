@@ -6,10 +6,13 @@ from .utils.audioExtractor import extract_audio_data
 def search_audio_url(request):
     query = request.GET.get('query')
     if not query:
-        return Response({'error': 'No search query provided'}, status=400)
+        return Response({'error': True})
+        # return Response({'error': True}, status=400)
 
     audio_url = extract_audio_data(query)
     if audio_url:
+        audio_url['error'] = False
         return Response(audio_url)
     else:
-        return Response({'error': 'Unable to find audio URL'}, status=500)
+        return Response({'error': True})
+        # return Response({'error': True}, status=500)
