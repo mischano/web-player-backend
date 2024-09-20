@@ -1,0 +1,39 @@
+## FOR RHEL 9. 
+# python3-venv is not available in the default repository for RHEL9. 
+# Therefore, epel-release, python3-pip and python3-devel must be installed manually. 
+sudo dnf install epel-release
+sudo dnf install python3-pip python3-devel
+
+# Create and enter the virtual environment. 
+python3 -m venv myenv
+source myenv/bin/activate
+
+pip install django 
+pip install django-cors-headers
+pip install djangorestframework
+pip install yt-dlp
+
+pip list
+Package             Version
+------------------- ---------
+asgiref             3.8.1
+Brotli              1.1.0
+certifi             2024.8.30
+charset-normalizer  3.3.2
+Django              4.2.16
+django-cors-headers 4.4.0
+djangorestframework 3.15.2
+idna                3.10
+mutagen             1.47.0
+pip                 21.2.3
+pycryptodomex       3.20.0
+requests            2.32.3
+setuptools          53.0.0
+sqlparse            0.5.1
+typing_extensions   4.12.2
+urllib3             2.2.3
+websockets          13.0.1
+yt-dlp              2024.8.6
+
+# To run the program. 
+python manage.py runserver
