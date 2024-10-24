@@ -16,23 +16,30 @@ def extract_audio_data(query):
         'extract_flat': True,  # Only fetch metadata, not actual media
     }
 
-    with yt_dlp.YoutubeDL(search_opts) as ydl:
-        search_result = ydl.extract_info(f"ytsearch:{query}", download=False)
+    try:
+        with yt_dlp.YoutubeDL(search_opts) as ydl:
+            search_result = ydl.extract_info(f"ytsearch:{query}", download=False)
         
-        if 'entries' in search_result and len(search_result['entries']) > 0:
+        if search_result.get('entries'):
             video_info = search_result['entries'][0]
             video_url = video_info.get('url')
+            
             if video_url:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl_audio:
                     audio_info = ydl_audio.extract_info(video_url, download=False)
-                    if 'url' in audio_info:
-                        return extract_info(audio_info)
+
+                if audio_info and 'url' in audio_info:
+                    return extract_info(audio_info)
+
+ 
+    except yt_dlp.DownloadError as e:
+        print(f"Download error: {e}")
+    except Exception as e:
+        print(f"An error occured: {e}")
+
+    return None
 
 def extract_info(audio_data):
-    audio_info = {'error': False}
     keys_to_extract = ['url', 'title', 'duration', 'channel', 'uploader', 'description', 'view_count']
-    for key in keys_to_extract:
-        audio_info[key] = audio_data.get(key, None)
-    return audio_info
+    return {key: audio_data.get(key) for key in keys_to_extract}
 
-        
