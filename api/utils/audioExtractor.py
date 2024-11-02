@@ -40,6 +40,6 @@ def extract_audio_data(query):
     return None
 
 def extract_info(audio_data):
-    keys_to_extract = ['url', 'title', 'duration', 'channel', 'uploader', 'description', 'view_count']
+    keys_to_extract = ['url', 'title', 'thumbnail', 'duration', 'channel', 'uploader', 'description', 'view_count']
     return {key: audio_data.get(key) for key in keys_to_extract}
 
